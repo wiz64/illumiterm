@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=IllumiTerm
+Comment=Terminal Emulator with a Soothing Glow
+Exec=/usr/local/bin/illumiterm
+Icon=/icons/illumiterm.png;/icons/about.png
+Terminal=false
+Type=Application
+Categories=Utility;TerminalEmulator;
