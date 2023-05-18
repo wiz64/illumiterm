@@ -20,7 +20,7 @@ for your target distribution.
 ## Building on Debian, Ubuntu or their derivatives
 
 ```
-$ ./autogen.sh  
+$ sh autogen.sh  
 $ ./configure 
 $ make
 $ sudo make install 
