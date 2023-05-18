@@ -1065,17 +1065,32 @@ static GtkWidget* create_window(GtkWidget* menu_bar, GtkWidget* notebook) {
     return window;
 }
 
-static void command_line(GApplication *application, GApplicationCommandLine *cli, gpointer data) {
+void command_line(GApplication *application, GApplicationCommandLine *cli, gpointer data) {
+    // Create a new VteTerminal widget
     GtkWidget *widget = vte_terminal_new();
+    
+    // Create the menu bar
     GtkWidget* menu_bar = create_menu();
+    
+    // Create the notebook
     GtkWidget* notebook = create_notebook(widget);
+    
+    // Create the main window
     GtkWidget* window = create_window(menu_bar, notebook);
 
+    // Hold a reference to the application
     g_application_hold(application);
+    
+    // Set the application as data associated with the command-line object, and release it when done
     g_object_set_data_full(G_OBJECT(cli), "application", application, (GDestroyNotify)g_application_release);
+    
+    // Set the command-line object as data associated with the window
     g_object_set_data_full(G_OBJECT(window), "cli", cli, NULL);
+    
+    // Increase the reference count of the command-line object
     g_object_ref(cli);
 
+    // Spawn a new VteTerminal process asynchronously
     spawn_vte_terminal(cli, window, widget);
 }
 
