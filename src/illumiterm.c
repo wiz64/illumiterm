@@ -409,51 +409,68 @@ static gboolean confirm_exit(GtkWidget* widget, GdkEvent* event, gpointer data) 
 
 static GtkWidget* create_context_menu() {
     GtkWidget *menu = gtk_menu_new();
+
+    // Create "New Window" menu item
     GtkWidget *new_window = gtk_menu_item_new_with_label("New Window");
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), new_window);
 
+    // Create "New Tab" menu item
     GtkWidget *new_tab = gtk_menu_item_new_with_label("New Tab");
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), new_tab);
 
+    // Create separator item 0
     GtkWidget *separator0 = gtk_separator_menu_item_new();
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), separator0);
 
+    // Create "Copy" menu item
     GtkWidget *copy_item = gtk_menu_item_new_with_label("Copy");
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), copy_item);
 
+    // Create "Paste" menu item
     GtkWidget *paste_item = gtk_menu_item_new_with_label("Paste");
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), paste_item);
 
+    // Create separator item 1
     GtkWidget *separator1 = gtk_separator_menu_item_new();
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), separator1);
 
+    // Create "Clear Scrollback" menu item
     GtkWidget *clear_scrollback = gtk_menu_item_new_with_label("Clear Scrollback");
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), clear_scrollback);
 
+    // Create separator item 2
     GtkWidget *separator2 = gtk_separator_menu_item_new();
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), separator2);
 
+    // Create "Preferences" menu item
     GtkWidget *preferences = gtk_menu_item_new_with_label("Preferences");
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), preferences);
 
+    // Create "Name Tab" menu item
     GtkWidget *name_tab = gtk_menu_item_new_with_label("Name Tab");
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), name_tab);
 
+    // Create "Previous Tab" menu item
     GtkWidget *previous_tab = gtk_menu_item_new_with_label("Previous Tab");
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), previous_tab);
 
+    // Create "Next Tab" menu item
     GtkWidget *next_tab = gtk_menu_item_new_with_label("Next Tab");
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), next_tab);
 
+    // Create "Move Tab Left" menu item
     GtkWidget *move_tab_left = gtk_menu_item_new_with_label("Move Tab Left");
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), move_tab_left);
 
+    // Create "Move Tab Right" menu item
     GtkWidget *move_tab_right = gtk_menu_item_new_with_label("Move Tab Right");
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), move_tab_right);
 
+    // Create "Close Tab" menu item
     GtkWidget *close_tab = gtk_menu_item_new_with_label("Close Tab");
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), close_tab);
 
+    // Show all menu items
     gtk_widget_show_all(menu);
 
     return menu;
