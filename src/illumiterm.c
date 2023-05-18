@@ -999,7 +999,8 @@ static GtkWidget* create_menu() {
     return menu_bar;
 }
 
-static void set_notebook_show_tabs(GtkWidget* notebook) {
+void set_notebook_show_tabs(GtkWidget* notebook) {
+    // Set the property to hide the tabs in the notebook
     gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), FALSE);
 }
 
