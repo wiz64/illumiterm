@@ -162,18 +162,12 @@ static void adjust_font_size(GtkWidget *widget, GtkWindow *window, gdouble facto
 
 static void increase_font_size(GtkWidget *widget, gpointer window)
 {
-    // Convert the widget pointer to VteTerminal type
-    VteTerminal *terminal = VTE_TERMINAL(widget);
-
     // Increase the font size by a factor of 1.125
     adjust_font_size(widget, GTK_WINDOW(window), 1.125);
 }
 
 static void decrease_font_size(GtkWidget *widget, gpointer window)
 {
-    // Convert the widget pointer to VteTerminal type
-    VteTerminal *terminal = VTE_TERMINAL(widget);
-
     // Decrease the font size by dividing it by a factor of 1.125
     adjust_font_size(widget, GTK_WINDOW(window), 1.0 / 1.125);
 }
