@@ -802,125 +802,163 @@ static GtkWidget* create_tabs_menu() {
     return tabs_menu;
 }
 
+// Set the properties of a window, such as title, modal behavior, and resizable state
+void set_window_properties(GtkWidget *window, const gchar *title, GtkWindow *parent, gboolean modal, gboolean resizable) {
+    // Set the window title
+    gtk_window_set_title(GTK_WINDOW(window), title); 
+    // Set modal behavior (whether it blocks input to other windows)
+    gtk_window_set_modal(GTK_WINDOW(window), modal); 
+    // Set the parent window for the transient behavior
+    gtk_window_set_transient_for(GTK_WINDOW(window), GTK_WINDOW(parent)); 
+    // Set the resizable state of the window
+    gtk_window_set_resizable(GTK_WINDOW(window), resizable); 
+}
+
+// Create a header bar widget with the specified title
+GtkWidget* create_header_bar(const gchar *title) {
+    // Create a new header bar widget
+    GtkWidget *header = gtk_header_bar_new(); 
+    // Set the title of the header bar
+    gtk_header_bar_set_title(GTK_HEADER_BAR(header), title); 
+    // Show the close button on the header bar
+    gtk_header_bar_set_show_close_button(GTK_HEADER_BAR(header), TRUE); 
+    // Return the created header bar widget
+    return header; 
+}
+
+// Create an image widget with the specified image file
+GtkWidget* create_image(const gchar *filename) {
+    // Create a new image widget from the specified file  
+    GtkWidget *image = gtk_image_new_from_file(filename); 
+    // Return the created image widget
+    return image; 
+}
+
+// Create a label widget with the specified markup text
+GtkWidget* create_label_with_markup(const gchar *markup) {
+    // Create a new label widget
+    GtkWidget *label = gtk_label_new(NULL); 
+    // Set the markup text for the label
+    gtk_label_set_markup(GTK_LABEL(label), markup); 
+    // Return the created label widget
+    return label; 
+}
+
+// Create a separator widget with the specified orientation
+GtkWidget* create_separator(GtkOrientation orientation) {
+    // Create a new separator widget with the specified orientation
+    GtkWidget *separator = gtk_separator_new(orientation); 
+    // Return the created separator widget
+    return separator; 
+}
+
+// Create a link button widget with the specified URI and label text
+GtkWidget* create_link_button(const gchar *uri, const gchar *label) {
+    // Create a new link button widget with the specified URI and label
+    GtkWidget *link_button = gtk_link_button_new_with_label(uri, label); 
+    // Return the created link button widget
+    return link_button; 
+}
+
+// Create a tab widget within a notebook widget, with the specified label markup
+GtkWidget* create_tab_with_label(GtkWidget *notebook, const gchar *label_markup) {
+    // Create a new box widget as the tab
+    GtkWidget *tab = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5); 
+    // Append the tab to the notebook
+    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), tab, gtk_label_new(NULL)); 
+    // Set the label markup for the tab
+    gtk_label_set_markup(GTK_LABEL(gtk_notebook_get_tab_label(GTK_NOTEBOOK(notebook), tab)), label_markup); 
+    // Return the created tab widget
+    return tab; 
+}
+
 void create_about_window(GtkWindow *parent) {
     GtkWidget *about_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    set_window_properties(about_window, "About IllumiTerm", parent, TRUE, FALSE);
 
-    gtk_window_set_title(GTK_WINDOW(about_window), "About IllumiTerm");
-    gtk_window_set_modal(GTK_WINDOW(about_window), TRUE);
-    gtk_window_set_transient_for(GTK_WINDOW(about_window), GTK_WINDOW(parent));
-    gtk_window_set_resizable(GTK_WINDOW(about_window), FALSE);
-
-    GtkWidget *header = gtk_header_bar_new();
-    gtk_header_bar_set_title(GTK_HEADER_BAR(header), "About IllumiTerm");
-    gtk_header_bar_set_subtitle(GTK_HEADER_BAR(header), "Version 1.0");
-    gtk_header_bar_set_show_close_button(GTK_HEADER_BAR(header), TRUE);
+    GtkWidget *header = create_header_bar("About IllumiTerm");
     gtk_window_set_titlebar(GTK_WINDOW(about_window), header);
 
     GtkWidget *notebook = gtk_notebook_new();
     gtk_container_add(GTK_CONTAINER(about_window), notebook);
 
-    GtkWidget *about_tab = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
-    GtkWidget *logo = gtk_image_new_from_file("/usr/share/icons/hicolor/96x96/apps/about.png");
-    gtk_box_pack_start(GTK_BOX(about_tab), logo, FALSE, FALSE, 0);
-    GtkWidget *label = gtk_label_new(NULL);
-    const char* label_text = "<big><b>IllumiTerm</b></big>";
-    GtkWidget *separator = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
-    gtk_box_pack_start(GTK_BOX(about_tab), separator, FALSE, FALSE, 0);
-    gtk_label_set_markup(GTK_LABEL(label), label_text);
-    gtk_box_pack_start(GTK_BOX(about_tab), label, FALSE, FALSE, 0);
-    GtkWidget *description = gtk_label_new(NULL);
-    const char *mark_up_text = "<b>Programming has always fascinated me, and I have always been interested\n"
-	                       "in learning new languages and exploring different software development tools.\n"
-      	                       "Recently, I decided to take my programming skills to the next level by learning C\n"
-		               "and creating my own custom terminal. It was a challenging yet rewarding experience\n"
-		               "that helped me develop my programming skills in many ways.\n"
-		               "\n"
-		               "My journey started with the decision to learn C. I had heard a lot about\n"
-		               "the language's speed, efficiency, and low-level programming capabilities,\n"
-		               "and I was excited to explore it. I started with the basics, such as data types,\n"
-		               "operators, and control statements, and gradually moved on to more advanced topics,\n"
-		               "such as pointers, structures, and file handling.</b>";
-	   
-    gtk_label_set_markup(GTK_LABEL(description), mark_up_text);
+    GtkWidget *about_tab = create_tab_with_label(notebook, "<b>About</b>");
 
+    GtkWidget *logo = create_image("/usr/share/icons/hicolor/96x96/apps/about.png");
+    gtk_box_pack_start(GTK_BOX(about_tab), logo, FALSE, FALSE, 0);
+
+    GtkWidget *label = create_label_with_markup("<big><b>IllumiTerm</b></big>");
+    gtk_box_pack_start(GTK_BOX(about_tab), label, FALSE, FALSE, 0);
+
+    GtkWidget *separator = create_separator(GTK_ORIENTATION_HORIZONTAL);
+    gtk_box_pack_start(GTK_BOX(about_tab), separator, FALSE, FALSE, 0);
+
+    GtkWidget *description = create_label_with_markup("<b>Programming has always fascinated me, and I have always been interested\n"
+                                                      "in learning new languages and exploring different software development tools.\n"
+      	                                              "Recently, I decided to take my programming skills to the next level by learning C\n"
+		                                              "and creating my own custom terminal. It was a challenging yet rewarding experience\n"
+		                                              "that helped me develop my programming skills in many ways.\n"
+		                                              "\n"
+		                                              "My journey started with the decision to learn C. I had heard a lot about\n"
+		                                              "the language's speed, efficiency, and low-level programming capabilities,\n"
+		                                              "and I was excited to explore it. I started with the basics, such as data types,\n"
+		                                              "operators, and control statements, and gradually moved on to more advanced topics,\n"
+		                                              "such as pointers, structures, and file handling.</b>");
+		                                              
     gtk_label_set_justify(GTK_LABEL(description), GTK_JUSTIFY_CENTER);
     gtk_box_pack_start(GTK_BOX(about_tab), description, TRUE, TRUE, 0);
-    GtkWidget *separator1 = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
-    gtk_box_pack_start(GTK_BOX(about_tab), separator1, FALSE, FALSE, 0);
-    GtkWidget *link_button = gtk_link_button_new_with_label("https://illumiterm.blogspot.com", "Visit Website");
-    gtk_box_pack_start(GTK_BOX(about_tab), link_button, FALSE, FALSE, 0);
     
-    const char* about_label_tab = "<b>About</b>";
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), about_tab, gtk_label_new(NULL));
-    gtk_label_set_markup(GTK_LABEL(gtk_notebook_get_tab_label(GTK_NOTEBOOK(notebook), about_tab)), about_label_tab);
+    GtkWidget *separator1 = create_separator(GTK_ORIENTATION_HORIZONTAL);
+    gtk_box_pack_start(GTK_BOX(about_tab), separator1, FALSE, FALSE, 0);
+    
+    GtkWidget *link_button = create_link_button("https://illumiterm.blogspot.com", "Visit Website");
+    gtk_box_pack_start(GTK_BOX(about_tab), link_button, FALSE, FALSE, 0);
 
-    GtkWidget *credits_tab = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    GtkWidget *credits_tab = create_tab_with_label(notebook, "<b>Credits</b>");
 
-    GtkWidget *logo1 = gtk_image_new_from_file("/usr/share/icons/hicolor/96x96/apps/about.png");
+    GtkWidget *logo1 = create_image("/usr/share/icons/hicolor/96x96/apps/about.png");
     gtk_box_pack_start(GTK_BOX(credits_tab), logo1, FALSE, FALSE, 0);
 
-    GtkWidget *credits_label = gtk_label_new(NULL);
-    GtkWidget *separator2 = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
-    gtk_box_pack_start(GTK_BOX(credits_tab), separator2, FALSE, FALSE, 0);
-    const char* credits_label_text = "<big><b>Credits</b></big>";
-    gtk_label_set_markup(GTK_LABEL(credits_label), credits_label_text);
+    GtkWidget *credits_label = create_label_with_markup("<big><b>Credits</b></big>");
     gtk_box_pack_start(GTK_BOX(credits_tab), credits_label, TRUE, TRUE, 0);
 
+    GtkWidget *separator2 = create_separator(GTK_ORIENTATION_HORIZONTAL);
+    gtk_box_pack_start(GTK_BOX(credits_tab), separator2, FALSE, FALSE, 0);
     GtkWidget *credits_list = gtk_label_new("<b>Dear GTK and VTE developers,</b>\n\n"
-		                            "<b>Your attention to detail and commitment to open-source principles have made a\n"
-		                            "significant impact on the software development community as a whole.\n\n"
-		                            "Your contributions have helped countless developers around the world\n"
-		                            "to create high-quality, reliable applications that are accessible to everyone.</b>\n\n"
-		                            "<b>Thank you for all that you do. Your work is greatly appreciated and will continue to\n"
-		                            "make a positive difference in the world of software development for years to come.</b>\n\n"
-		                            "<b>Sincerely,</b>\n"
-		                            "<b>Elijah Gordon</b>");
-
+		                                    "<b>Your attention to detail and commitment to open-source principles have made a\n"
+		                                    "significant impact on the software development community as a whole.\n\n"
+		                                    "Your contributions have helped countless developers around the world\n"
+		                                    "to create high-quality, reliable applications that are accessible to everyone.</b>\n\n"
+		                                    "<b>Thank you for all that you do. Your work is greatly appreciated and will continue to\n"
+		                                    "make a positive difference in the world of software development for years to come.</b>\n\n"
+		                                    "<b>Sincerely,</b>\n"
+		                                    "<b>Elijah Gordon</b>");
+		                                    
     gtk_label_set_use_markup(GTK_LABEL(credits_list), TRUE);
-    gtk_box_pack_start(GTK_BOX(credits_tab), credits_list, FALSE, FALSE, 0);
-
-    gtk_label_set_use_markup(GTK_LABEL(credits_list), TRUE);
-                                            
     gtk_label_set_justify(GTK_LABEL(credits_list), GTK_JUSTIFY_CENTER);
     gtk_box_pack_start(GTK_BOX(credits_tab), credits_list, FALSE, FALSE, 0);
 
-    const char* credits_label_tab = "<b>Credits</b>";
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), credits_tab, gtk_label_new(NULL));
-    gtk_label_set_markup(GTK_LABEL(gtk_notebook_get_tab_label(GTK_NOTEBOOK(notebook), credits_tab)), credits_label_tab);
-
-    GtkWidget *separator3 = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
+    GtkWidget *separator3 = create_separator(GTK_ORIENTATION_HORIZONTAL);
     gtk_box_pack_start(GTK_BOX(credits_tab), separator3, FALSE, FALSE, 0);
 
-    GtkWidget *link_button1 = gtk_link_button_new_with_label("https://illumiterm.blogspot.com", "Visit Website");
+    GtkWidget *copy = create_label_with_markup("<b>Copyright (C) 2023 Elijah Gordon (SLcK)</b>");
+    gtk_box_pack_end(GTK_BOX(credits_tab), copy, FALSE, FALSE, 0);
+    GtkWidget *link_button1 = create_link_button("https://illumiterm.blogspot.com", "Visit Website");
     gtk_box_pack_start(GTK_BOX(credits_tab), link_button1, FALSE, FALSE, 0);
 
-    GtkWidget *license_tab = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
-    GtkWidget *license_label = gtk_label_new(NULL);
-    
-    GtkWidget *copy1 = gtk_label_new(NULL);
-    const char *mark_up_text1 = "<b>Copyright (C) 2023 Elijah Gordon (SLcK)</b>";
-    gtk_label_set_markup(GTK_LABEL(copy1), mark_up_text1);
-    gtk_box_pack_end(GTK_BOX(credits_tab), copy1, FALSE, FALSE, 0);
-    
-    GtkWidget *copy2 = gtk_label_new(NULL);
-    const char *mark_up_text2 = "<b>Copyright (C) 2023 Elijah Gordon (SLcK)</b>";
-    gtk_label_set_markup(GTK_LABEL(copy2), mark_up_text2);
-    gtk_box_pack_end(GTK_BOX(license_tab), copy2, FALSE, FALSE, 0);
-    
-    GtkWidget *logo2 = gtk_image_new_from_file("/usr/share/icons/hicolor/96x96/apps/about.png");
+    GtkWidget *license_tab = create_tab_with_label(notebook, "<b>License</b>");
+
+    GtkWidget *copy1 = create_label_with_markup("<b>Copyright (C) 2023 Elijah Gordon (SLcK)</b>");
+    gtk_box_pack_end(GTK_BOX(license_tab), copy1, FALSE, FALSE, 0);
+
+    GtkWidget *logo2 = create_image("/usr/share/icons/hicolor/96x96/apps/about.png");
     gtk_box_pack_start(GTK_BOX(license_tab), logo2, FALSE, FALSE, 0);
 
-    const char* license_label_tab = "<b>License</b>";
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), license_tab, gtk_label_new(NULL));
-    gtk_label_set_markup(GTK_LABEL(gtk_notebook_get_tab_label(GTK_NOTEBOOK(notebook), license_tab)), license_label_tab);
-    
-    const char* license_label_text = "<big><b>License</b></big>";
-
-    GtkWidget *separator4 = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
-    gtk_box_pack_start(GTK_BOX(license_tab), separator4, FALSE, FALSE, 0);
-
-    gtk_label_set_markup(GTK_LABEL(license_label), license_label_text);
+    GtkWidget *license_label = create_label_with_markup("<big><b>License</b></big>");
     gtk_box_pack_start(GTK_BOX(license_tab), license_label, FALSE, FALSE, 0);
+
+    GtkWidget *separator4 = create_separator(GTK_ORIENTATION_HORIZONTAL);
+    gtk_box_pack_start(GTK_BOX(license_tab), separator4, FALSE, FALSE, 0);
     GtkWidget *license_description = gtk_label_new("<b>This program is free software; you can redistribute it and/or\n"
                                                    "modify it under the terms of the GNU General Public License\n"
                                                    "as published by the Free Software Foundation; either version 2\n"
@@ -934,18 +972,17 @@ void create_about_window(GtkWindow *parent) {
                                                    "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.</b>");
                                                    
     gtk_label_set_use_markup(GTK_LABEL(license_description), TRUE);
-
     gtk_label_set_justify(GTK_LABEL(license_description), GTK_JUSTIFY_CENTER);
     gtk_box_pack_start(GTK_BOX(license_tab), license_description, FALSE, FALSE, 0);
 
-    GtkWidget *separator5 = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
+    GtkWidget *separator5 = create_separator(GTK_ORIENTATION_HORIZONTAL);
     gtk_box_pack_start(GTK_BOX(license_tab), separator5, FALSE, FALSE, 0);
-    GtkWidget *link_button2 = gtk_link_button_new_with_label("https://illumiterm.blogspot.com", "Visit Website");
+
+    GtkWidget *link_button2 = create_link_button("https://illumiterm.blogspot.com", "Visit Website");
     gtk_box_pack_start(GTK_BOX(license_tab), link_button2, FALSE, FALSE, 0);
-    GtkWidget *copy = gtk_label_new(NULL);
-    const char *markup_text = "<b>Copyright (C) 2023 Elijah Gordon (SLcK)</b>";
-    gtk_label_set_markup(GTK_LABEL(copy), markup_text);
-    gtk_box_pack_end(GTK_BOX(about_tab), copy, FALSE, FALSE, 0);
+
+    GtkWidget *copy2 = create_label_with_markup("<b>Copyright (C) 2023 Elijah Gordon (SLcK)</b>");
+    gtk_box_pack_end(GTK_BOX(about_tab), copy2, FALSE, FALSE, 0);
 
     gtk_widget_show_all(about_window);
 }
