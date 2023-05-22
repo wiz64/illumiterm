@@ -526,22 +526,27 @@ static void child_ready(VteTerminal* terminal, GPid pid, GError* error, gpointer
 }
 
 static void connect_child_exited_signal(GtkWidget* widget, GtkWidget* window) {
+    // Connect the "child-exited" signal of the widget to the "child_exited" callback function
     g_signal_connect(widget, "child-exited", G_CALLBACK(child_exited), window);
 }
 
 static void connect_key_press_event_signal(GtkWidget* widget, GtkWidget* window) {
+    // Connect the "key-press-event" signal of the widget to the "key_press_event" callback function
     g_signal_connect(widget, "key-press-event", G_CALLBACK(key_press_event), window);
 }
 
 static void connect_window_title_changed_signal(GtkWidget* widget, GtkWidget* window) {
+    // Connect the "window-title-changed" signal of the widget to the "window_title_changed" callback function
     g_signal_connect(widget, "window-title-changed", G_CALLBACK(window_title_changed), window);
 }
 
 static void connect_button_press_event_signal(GtkWidget* widget) {
+    // Connect the "button_press_event" signal of the widget to the "button_press_event" callback function
     g_signal_connect(widget, "button_press_event", G_CALLBACK(button_press_event), NULL);
 }
 
 static void connect_delete_event_signal(GtkWidget* window) {
+    // Connect the "delete-event" signal of the window widget to the "confirm_exit" callback function
     g_signal_connect(window, "delete-event", G_CALLBACK(confirm_exit), NULL);
 }
 
