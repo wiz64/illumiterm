@@ -645,6 +645,10 @@ void on_close_tab_activate(GtkMenuItem *menuitem, gpointer user_data) {
 }
 
 void on_close_window_activate(GtkMenuItem *menuitem, gpointer user_data) {
+    // This function is a callback for the "Close Window" menu item.
+    // It is triggered when the menu item is activated.
+
+    // Exit the application with a status code of 0, indicating successful termination.
     exit(0);
 }
 
