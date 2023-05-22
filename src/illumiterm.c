@@ -904,22 +904,22 @@ void create_about_window(GtkWindow *parent) {
 
     GtkWidget *description = create_label_with_markup("<b>Programming has always fascinated me, and I have always been interested\n"
                                                       "in learning new languages and exploring different software development tools.\n"
-      	                                              "Recently, I decided to take my programming skills to the next level by learning C\n"
-		                                      "and creating my own custom terminal. It was a challenging yet rewarding experience\n"
-		                                      "that helped me develop my programming skills in many ways.\n"
-		                                      "\n"
-		                                      "My journey started with the decision to learn C. I had heard a lot about\n"
-		                                      "the language's speed, efficiency, and low-level programming capabilities,\n"
-		                                      "and I was excited to explore it. I started with the basics, such as data types,\n"
-		                                      "operators, and control statements, and gradually moved on to more advanced topics,\n"
-		                                      "such as pointers, structures, and file handling.</b>");
-		                                              
+                                                      "Recently, I decided to take my programming skills to the next level by learning C\n"
+                                                      "and creating my own custom terminal. It was a challenging yet rewarding experience\n"
+                                                      "that helped me develop my programming skills in many ways.\n"
+                                                      "\n"
+                                                      "My journey started with the decision to learn C. I had heard a lot about\n"
+                                                      "the language's speed, efficiency, and low-level programming capabilities,\n"
+                                                      "and I was excited to explore it. I started with the basics, such as data types,\n"
+                                                      "operators, and control statements, and gradually moved on to more advanced topics,\n"
+                                                      "such as pointers, structures, and file handling.</b>");
+
     gtk_label_set_justify(GTK_LABEL(description), GTK_JUSTIFY_CENTER);
     gtk_box_pack_start(GTK_BOX(about_tab), description, TRUE, TRUE, 0);
-    
+
     GtkWidget *separator1 = create_separator(GTK_ORIENTATION_HORIZONTAL);
     gtk_box_pack_start(GTK_BOX(about_tab), separator1, FALSE, FALSE, 0);
-    
+
     GtkWidget *link_button = create_link_button("https://illumiterm.blogspot.com", "Visit Website");
     gtk_box_pack_start(GTK_BOX(about_tab), link_button, FALSE, FALSE, 0);
 
@@ -934,15 +934,15 @@ void create_about_window(GtkWindow *parent) {
     GtkWidget *separator2 = create_separator(GTK_ORIENTATION_HORIZONTAL);
     gtk_box_pack_start(GTK_BOX(credits_tab), separator2, FALSE, FALSE, 0);
     GtkWidget *credits_list = gtk_label_new("<b>Dear GTK and VTE developers,</b>\n\n"
-		                            "<b>Your attention to detail and commitment to open-source principles have made a\n"
-		                            "significant impact on the software development community as a whole.\n\n"
-		                            "Your contributions have helped countless developers around the world\n"
-		                            "to create high-quality, reliable applications that are accessible to everyone.</b>\n\n"
-		                            "<b>Thank you for all that you do. Your work is greatly appreciated and will continue to\n"
-		                            "make a positive difference in the world of software development for years to come.</b>\n\n"
-		                            "<b>Sincerely,</b>\n"
-		                            "<b>Elijah Gordon</b>");
-		                                    
+                                            "<b>Your attention to detail and commitment to open-source principles have made a\n"
+                                            "significant impact on the software development community as a whole.\n\n"
+                                            "Your contributions have helped countless developers around the world\n"
+                                            "to create high-quality, reliable applications that are accessible to everyone.</b>\n\n"
+                                            "<b>Thank you for all that you do. Your work is greatly appreciated and will continue to\n"
+                                            "make a positive difference in the world of software development for years to come.</b>\n\n"
+                                            "<b>Sincerely,</b>\n"
+                                            "<b>Elijah Gordon</b>");
+
     gtk_label_set_use_markup(GTK_LABEL(credits_list), TRUE);
     gtk_label_set_justify(GTK_LABEL(credits_list), GTK_JUSTIFY_CENTER);
     gtk_box_pack_start(GTK_BOX(credits_tab), credits_list, FALSE, FALSE, 0);
@@ -979,7 +979,7 @@ void create_about_window(GtkWindow *parent) {
                                                    "<b>You should have received a copy of the GNU General Public License\n"
                                                    "along with this program; if not, write to the Free Software\n"
                                                    "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.</b>");
-                                                   
+
     gtk_label_set_use_markup(GTK_LABEL(license_description), TRUE);
     gtk_label_set_justify(GTK_LABEL(license_description), GTK_JUSTIFY_CENTER);
     gtk_box_pack_start(GTK_BOX(license_tab), license_description, FALSE, FALSE, 0);
@@ -995,6 +995,7 @@ void create_about_window(GtkWindow *parent) {
 
     gtk_widget_show_all(about_window);
 }
+
 
 void on_about_activate(GtkMenuItem *menuitem, gpointer user_data) {
     // Cast the user data parameter to GtkWindow* type
