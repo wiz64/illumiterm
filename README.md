@@ -12,7 +12,7 @@ for your target distribution.
 
 ## Basic requirements for building
 
-* make --> `$ sudo apt install make`  
+* make --> `$ sudo apt install make -y`  
 * libtool --> `$ sudo apt install libtool -y`  
 * libgtk-3-dev --> `$ sudo apt install libgtk-3-dev -y`  
 * libvte-2.91-dev --> `$ sudo apt install libvte-2.91-dev -y`  
