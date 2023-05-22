@@ -996,7 +996,6 @@ void create_about_window(GtkWindow *parent) {
     gtk_widget_show_all(about_window);
 }
 
-
 void on_about_activate(GtkMenuItem *menuitem, gpointer user_data) {
     // Cast the user data parameter to GtkWindow* type
     GtkWindow* window = GTK_WINDOW(user_data);
