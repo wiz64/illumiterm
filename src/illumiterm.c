@@ -881,27 +881,24 @@ GtkWidget* create_tab_with_label(GtkWidget *notebook, const gchar *label_markup)
     return tab; 
 }
 
-void create_about_window(GtkWindow *parent) {
-    GtkWidget *about_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    set_window_properties(about_window, "About IllumiTerm", parent, TRUE, FALSE);
-
-    GtkWidget *header = create_header_bar("About IllumiTerm");
-    gtk_window_set_titlebar(GTK_WINDOW(about_window), header);
-
-    GtkWidget *notebook = gtk_notebook_new();
-    gtk_container_add(GTK_CONTAINER(about_window), notebook);
-
+void create_about_tab(GtkWidget *notebook)
+{
+    // Create the "About" tab
     GtkWidget *about_tab = create_tab_with_label(notebook, "<b>About</b>");
 
+    // Add logo image
     GtkWidget *logo = create_image("/usr/share/icons/hicolor/96x96/apps/about.png");
     gtk_box_pack_start(GTK_BOX(about_tab), logo, FALSE, FALSE, 0);
 
+    // Add label for the application name
     GtkWidget *label = create_label_with_markup("<big><b>IllumiTerm</b></big>");
     gtk_box_pack_start(GTK_BOX(about_tab), label, FALSE, FALSE, 0);
 
+    // Add a separator
     GtkWidget *separator = create_separator(GTK_ORIENTATION_HORIZONTAL);
     gtk_box_pack_start(GTK_BOX(about_tab), separator, FALSE, FALSE, 0);
 
+    // Add description label
     GtkWidget *description = create_label_with_markup("<b>Programming has always fascinated me, and I have always been interested\n"
                                                       "in learning new languages and exploring different software development tools.\n"
                                                       "Recently, I decided to take my programming skills to the next level by learning C\n"
@@ -917,22 +914,37 @@ void create_about_window(GtkWindow *parent) {
     gtk_label_set_justify(GTK_LABEL(description), GTK_JUSTIFY_CENTER);
     gtk_box_pack_start(GTK_BOX(about_tab), description, TRUE, TRUE, 0);
 
+    // Add another separator
     GtkWidget *separator1 = create_separator(GTK_ORIENTATION_HORIZONTAL);
     gtk_box_pack_start(GTK_BOX(about_tab), separator1, FALSE, FALSE, 0);
 
+    // Add a link button
     GtkWidget *link_button = create_link_button("https://illumiterm.blogspot.com", "Visit Website");
     gtk_box_pack_start(GTK_BOX(about_tab), link_button, FALSE, FALSE, 0);
+    
+    // Add a label for the copyright notice
+    GtkWidget *copy = create_label_with_markup("<b>Copyright (C) 2023 Elijah Gordon (SLcK)</b>");
+    gtk_box_pack_end(GTK_BOX(about_tab), copy, FALSE, FALSE, 0);
+}
 
+void create_credits_tab(GtkWidget *notebook)
+{
+    // Create the "Credits" tab
     GtkWidget *credits_tab = create_tab_with_label(notebook, "<b>Credits</b>");
 
+    // Add logo image
     GtkWidget *logo1 = create_image("/usr/share/icons/hicolor/96x96/apps/about.png");
     gtk_box_pack_start(GTK_BOX(credits_tab), logo1, FALSE, FALSE, 0);
 
+    // Add label for the credits section
     GtkWidget *credits_label = create_label_with_markup("<big><b>Credits</b></big>");
     gtk_box_pack_start(GTK_BOX(credits_tab), credits_label, TRUE, TRUE, 0);
 
+    // Add a separator
     GtkWidget *separator2 = create_separator(GTK_ORIENTATION_HORIZONTAL);
     gtk_box_pack_start(GTK_BOX(credits_tab), separator2, FALSE, FALSE, 0);
+    
+    // Add credits list label
     GtkWidget *credits_list = gtk_label_new("<b>Dear GTK and VTE developers,</b>\n\n"
                                             "<b>Your attention to detail and commitment to open-source principles have made a\n"
                                             "significant impact on the software development community as a whole.\n\n"
@@ -947,27 +959,41 @@ void create_about_window(GtkWindow *parent) {
     gtk_label_set_justify(GTK_LABEL(credits_list), GTK_JUSTIFY_CENTER);
     gtk_box_pack_start(GTK_BOX(credits_tab), credits_list, FALSE, FALSE, 0);
 
+    // Add another separator
     GtkWidget *separator3 = create_separator(GTK_ORIENTATION_HORIZONTAL);
     gtk_box_pack_start(GTK_BOX(credits_tab), separator3, FALSE, FALSE, 0);
 
+    // Add a label for the copyright notice
     GtkWidget *copy = create_label_with_markup("<b>Copyright (C) 2023 Elijah Gordon (SLcK)</b>");
     gtk_box_pack_end(GTK_BOX(credits_tab), copy, FALSE, FALSE, 0);
+
+    // Add a link button
     GtkWidget *link_button1 = create_link_button("https://illumiterm.blogspot.com", "Visit Website");
     gtk_box_pack_start(GTK_BOX(credits_tab), link_button1, FALSE, FALSE, 0);
+}
 
+void create_license_tab(GtkWidget *notebook)
+{
+    // Create the "License" tab
     GtkWidget *license_tab = create_tab_with_label(notebook, "<b>License</b>");
 
+    // Add a label for the copyright notice
     GtkWidget *copy1 = create_label_with_markup("<b>Copyright (C) 2023 Elijah Gordon (SLcK)</b>");
     gtk_box_pack_end(GTK_BOX(license_tab), copy1, FALSE, FALSE, 0);
 
+    // Add logo image
     GtkWidget *logo2 = create_image("/usr/share/icons/hicolor/96x96/apps/about.png");
     gtk_box_pack_start(GTK_BOX(license_tab), logo2, FALSE, FALSE, 0);
 
+    // Add label for the license section
     GtkWidget *license_label = create_label_with_markup("<big><b>License</b></big>");
     gtk_box_pack_start(GTK_BOX(license_tab), license_label, FALSE, FALSE, 0);
 
+    // Add a separator
     GtkWidget *separator4 = create_separator(GTK_ORIENTATION_HORIZONTAL);
     gtk_box_pack_start(GTK_BOX(license_tab), separator4, FALSE, FALSE, 0);
+    
+    // Add license description label
     GtkWidget *license_description = gtk_label_new("<b>This program is free software; you can redistribute it and/or\n"
                                                    "modify it under the terms of the GNU General Public License\n"
                                                    "as published by the Free Software Foundation; either version 2\n"
@@ -984,15 +1010,39 @@ void create_about_window(GtkWindow *parent) {
     gtk_label_set_justify(GTK_LABEL(license_description), GTK_JUSTIFY_CENTER);
     gtk_box_pack_start(GTK_BOX(license_tab), license_description, FALSE, FALSE, 0);
 
+    // Add another separator
     GtkWidget *separator5 = create_separator(GTK_ORIENTATION_HORIZONTAL);
     gtk_box_pack_start(GTK_BOX(license_tab), separator5, FALSE, FALSE, 0);
 
+    // Add a link button
     GtkWidget *link_button2 = create_link_button("https://illumiterm.blogspot.com", "Visit Website");
     gtk_box_pack_start(GTK_BOX(license_tab), link_button2, FALSE, FALSE, 0);
+}
 
-    GtkWidget *copy2 = create_label_with_markup("<b>Copyright (C) 2023 Elijah Gordon (SLcK)</b>");
-    gtk_box_pack_end(GTK_BOX(about_tab), copy2, FALSE, FALSE, 0);
+void create_about_window(GtkWindow *parent)
+{
+    // Create the about window
+    GtkWidget *about_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    set_window_properties(about_window, "About IllumiTerm", parent, TRUE, FALSE);
 
+    // Create a header bar for the about window
+    GtkWidget *header = create_header_bar("About IllumiTerm");
+    gtk_window_set_titlebar(GTK_WINDOW(about_window), header);
+
+    // Create a notebook widget to hold the tabs
+    GtkWidget *notebook = gtk_notebook_new();
+    gtk_container_add(GTK_CONTAINER(about_window), notebook);
+
+    // Create the "About" tab
+    create_about_tab(notebook);
+
+    // Create the "Credits" tab
+    create_credits_tab(notebook);
+
+    // Create the "License" tab
+    create_license_tab(notebook);
+
+    // Show all widgets in the about window
     gtk_widget_show_all(about_window);
 }
 
